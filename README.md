@@ -2,6 +2,8 @@
 
 Pegmatite is Google Chrome extension that replace PlantUML code blocks into preview images.
 
+[Chrome web store](https://chrome.google.com/webstore/detail/pegmatite/jegkfbnfbfnohncpcfcimepibmhlkldo)
+
 ## Summary
 
 You will see below | But we see
