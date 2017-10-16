@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
 	"name": "Pegmatite",
-	"version": "1.0",
+	"version": "1.1",
 	"description": "Shows graphs and diagrams rendered by PlantUML.",
 	"content_scripts": [
 		{
@@ -10,7 +10,9 @@
 				"content-script.js"
 			],
 			"matches": [
+				"*://*/*",
 				"https://github.com/*",
+				"https://*.github.io/*",
 				"https://gist.github.com/*"
 			]
 		}

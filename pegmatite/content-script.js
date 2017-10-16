@@ -47,9 +47,9 @@ function escapeHtml(text) {
 		.replace(/'/g, "&#039;");
 }
 
-[].forEach.call(document.querySelectorAll("pre[lang='uml']"), function(umlElem) {
+[].forEach.call(document.querySelectorAll("div[puml],pre[uml],pre[lang='uml']>code"), function(umlElem) {
 	var parent = umlElem.parentNode;
-	var plantuml = umlElem.querySelector("code").textContent.trim();
+	var plantuml = umlElem.textContent.trim();
 	if (plantuml.substr(0, "@start".length) != "@start") return;
 
 	var url = "https://www.plantuml.com/plantuml/img/" + compress(plantuml);
