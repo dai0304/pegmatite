@@ -33,3 +33,5 @@ export class GraphWidget extends EventEmitter implements IGraphWidget {
 
 after generate type doc then open generated document on chrome then you can see PlantUML image!
 
+### install
+[how-to-install-a-chrome-extension-without-using-the-chrome-web-store](https://blog.hunter.io/how-to-install-a-chrome-extension-without-using-the-chrome-web-store-31902c780034)
