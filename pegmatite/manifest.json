@@ -3,6 +3,12 @@
 	"name": "Pegmatite",
 	"version": "1.1",
 	"description": "Shows graphs and diagrams rendered by PlantUML.",
+	"permissions": [
+		"webRequest",
+		"webRequestBlocking",
+		"browsingData",
+		"*://*/"
+	],
 	"content_scripts": [
 		{
 			"js": [
@@ -10,11 +16,12 @@
 				"content-script.js"
 			],
 			"matches": [
-				"*://*/*",
-				"https://github.com/*",
-				"https://*.github.io/*",
-				"https://gist.github.com/*"
+				"*://*/*"
 			]
 		}
-	]
+	],
+	"background": {
+		"scripts": ["background.js"],
+		"persistent": true
+	}
 }

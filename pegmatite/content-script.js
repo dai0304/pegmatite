@@ -48,6 +48,28 @@ function escapeHtml(text) {
 }
 
 [].forEach.call(document.querySelectorAll("div[puml],pre[uml],pre[lang='uml']>code"), function(umlElem) {
+    createObj(umlElem);
+	// try {
+	// 	createObj(umlElem);
+	// }catch(e) {
+	// 	createImg(umlElem);
+	// }
+
+
+});
+
+function createImg(umlElem){
+	var parent = umlElem.parentNode;
+	var plantuml = umlElem.textContent.trim();
+	if (plantuml.substr(0, "@start".length) != "@start") return;
+
+	var url = "https://www.plantuml.com/plantuml/svg/" + compress(plantuml);
+	var imgElem = document.createElement("img");
+	imgElem.setAttribute("src", escapeHtml(url));
+	parent.replaceChild(imgElem, umlElem);
+}
+
+function createObj(umlElem) {
 	var parent = umlElem.parentNode;
 	var plantuml = umlElem.textContent.trim();
 	if (plantuml.substr(0, "@start".length) != "@start") return;
@@ -56,13 +78,7 @@ function escapeHtml(text) {
 	var imgElem = document.createElement("object");
 	imgElem.setAttribute("type", "image/svg+xml");
 	imgElem.setAttribute("data", escapeHtml(url));
-	// imgElem.setAttribute("title", plantuml);
 	parent.replaceChild(imgElem, umlElem);
+}
 
-	// imgElem.onclick = function() {
-	// 	parent.replaceChild(umlElem, imgElem);
-	// };
-	// umlElem.onclick = function() {
-	// 	parent.replaceChild(imgElem, umlElem);
-	// };
-});
+
