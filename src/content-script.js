@@ -47,15 +47,26 @@ function escapeHtml(text) {
 		.replace(/'/g, "&#039;");
 }
 
-[].forEach.call(document.querySelectorAll("div[puml],pre[uml],pre[lang='uml']>code"), function(umlElem) {
-    createObj(umlElem);
-	// try {
-	// 	createObj(umlElem);
-	// }catch(e) {
-	// 	createImg(umlElem);
-	// }
 
+function xxx() {
+	//console.log('xxx');
 
+    [].forEach.call(document.querySelectorAll("div[puml],pre[uml],pre[lang='uml']>code"), function(umlElem) {
+        createObj(umlElem);
+    });
+}
+
+var timeoutHandle = null;
+
+window.addEventListener("load", function(event){
+	xxx();
+});
+
+document.addEventListener("DOMSubtreeModified", function(event){
+    if(timeoutHandle){
+        clearTimeout(timeoutHandle)
+    }
+    timeoutHandle = setTimeout(xxx,500);
 });
 
 function createImg(umlElem){
@@ -78,6 +89,7 @@ function createObj(umlElem) {
 	var imgElem = document.createElement("object");
 	imgElem.setAttribute("type", "image/svg+xml");
 	imgElem.setAttribute("data", escapeHtml(url));
+	imgElem.setAttribute("style", "width:100%");
 	parent.replaceChild(imgElem, umlElem);
 }
 
