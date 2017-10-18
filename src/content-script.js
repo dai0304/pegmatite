@@ -49,8 +49,6 @@ function escapeHtml(text) {
 
 
 function xxx() {
-	//console.log('xxx');
-
     [].forEach.call(document.querySelectorAll("div[puml],pre[uml],pre[lang='uml']>code"), function(umlElem) {
         createObj(umlElem);
     });
