@@ -1,6 +1,6 @@
 {
 	"manifest_version": 2,
-	"name": "Pegmatite",
+	"name": "plantUML_everywhere",
 	"version": "1.1",
 	"description": "Shows graphs and diagrams rendered by PlantUML.",
 	"permissions": [
