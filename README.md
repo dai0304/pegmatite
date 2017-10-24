@@ -1,75 +1,37 @@
 # Pegmatite - Chrome ext to preview PlantUML in markdown
 
-Pegmatite is Google Chrome extension that replace PlantUML code blocks into preview images.
+This is minor improve of Pegmatite. It is Google Chrome extension that replace PlantUML code blocks into preview images.
+[Original Project](https://github.com/dai0304/pegmatite)
 
-[Chrome web store](https://chrome.google.com/webstore/detail/pegmatite/jegkfbnfbfnohncpcfcimepibmhlkldo)
+After install This extension you can view plantuml text as a image.
 
-## Summary
+### Any Html Page at Any Site
+You can use `<div puml> @startuml .... @enduml</div>`
+or `<pre uml> @startuml .... @enduml</pre>`
+then you can see PlantUML image instead of PlantUML code
 
-You will see below | But we see
--------------|-------------
-![Code block](images/before.png) | ![UML diagraml](images/after.png)
-
-- This extension is enabled only in `https://github.com/*`
-- Replace only code block with lang `uml` and starts with `@start`
-- When the element clicked, element will toggle original code block and preview image.
-
-## Sample contents
-
-### Sequence diagram
-
-```uml
-@startuml
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
-
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
-@enduml
+### typedoc example
+```typescript
+/**
+ * This is class documentation comment
+ *
+ * class diagram for this class
+ * <pre uml>
+ *   @startuml
+ *   Object <|-- ArrayList
+ *
+ *   Object : equals()
+ *   ArrayList : Object[] elementData
+ *   ArrayList : size()
+ *   @enduml
+ * </pre>
+ *
+ */
+export class GraphWidget extends EventEmitter implements IGraphWidget {
+...
 ```
 
-### Sequence diagram
+after generate type doc then open generated document on chrome then you can see PlantUML image!
 
-```uml
-@startuml
-[*] --> State1
-State1 --> [*]
-State1 : this is a string
-State1 : this is another string
-
-State1 -> State2
-State2 --> [*]
-@enduml
-```
-
-### Other code blocks
-
-These cannot preview.
-
-#### Code block without lang `uml`
-
-```
-@startuml
-Foo -> Bar
-@enduml
-```
-
-#### `uml` code block does not starts with `@start`
-
-```uml
-foo
-bar
-baz
-```
-
-## Contribution
-
-1. Fork ([https://github.com/dai0304/pegmatite/fork](https://github.com/dai0304/pegmatite/fork))
-1. Create a feature branch named like `feature/something_awesome_feature` from `development` branch
-1. Commit your changes
-1. Rebase your local changes against the `develop` branch
-1. Create new Pull Request
-
-## Author
-
-[Daisuke Miyamoto](https://github.com/dai0304)
+### install
+[how-to-install-a-chrome-extension-without-using-the-chrome-web-store](https://blog.hunter.io/how-to-install-a-chrome-extension-without-using-the-chrome-web-store-31902c780034)

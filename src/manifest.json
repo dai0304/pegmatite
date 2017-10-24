@@ -1,0 +1,27 @@
+{
+	"manifest_version": 2,
+	"name": "plantUML_everywhere",
+	"version": "1.1",
+	"description": "Shows graphs and diagrams rendered by PlantUML.",
+	"permissions": [
+		"webRequest",
+		"webRequestBlocking",
+		"browsingData",
+		"*://*/"
+	],
+	"content_scripts": [
+		{
+			"js": [
+				"rawdeflate.js",
+				"content-script.js"
+			],
+			"matches": [
+				"*://*/*"
+			]
+		}
+	],
+	"background": {
+		"scripts": ["background.js"],
+		"persistent": true
+	}
+}

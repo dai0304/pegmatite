@@ -47,21 +47,48 @@ function escapeHtml(text) {
 		.replace(/'/g, "&#039;");
 }
 
-[].forEach.call(document.querySelectorAll("pre[lang='uml']"), function(umlElem) {
+
+function xxx() {
+    [].forEach.call(document.querySelectorAll("div[puml],pre[uml],pre[lang='uml']>code"), function(umlElem) {
+        createObj(umlElem);
+    });
+}
+
+var timeoutHandle = null;
+
+window.addEventListener("load", function(event){
+	xxx();
+});
+
+document.addEventListener("DOMSubtreeModified", function(event){
+    if(timeoutHandle){
+        clearTimeout(timeoutHandle)
+    }
+    timeoutHandle = setTimeout(xxx,500);
+});
+
+function createImg(umlElem){
 	var parent = umlElem.parentNode;
-	var plantuml = umlElem.querySelector("code").textContent.trim();
+	var plantuml = umlElem.textContent.trim();
 	if (plantuml.substr(0, "@start".length) != "@start") return;
 
-	var url = "https://www.plantuml.com/plantuml/img/" + compress(plantuml);
+	var url = "https://www.plantuml.com/plantuml/svg/" + compress(plantuml);
 	var imgElem = document.createElement("img");
 	imgElem.setAttribute("src", escapeHtml(url));
-	imgElem.setAttribute("title", plantuml);
 	parent.replaceChild(imgElem, umlElem);
+}
 
-	imgElem.onclick = function() {
-		parent.replaceChild(umlElem, imgElem);
-	};
-	umlElem.onclick = function() {
-		parent.replaceChild(imgElem, umlElem);
-	};
-});
+function createObj(umlElem) {
+	var parent = umlElem.parentNode;
+	var plantuml = umlElem.textContent.trim();
+	if (plantuml.substr(0, "@start".length) != "@start") return;
+
+	var url = "https://www.plantuml.com/plantuml/svg/" + compress(plantuml);
+	var imgElem = document.createElement("object");
+	imgElem.setAttribute("type", "image/svg+xml");
+	imgElem.setAttribute("data", escapeHtml(url));
+	imgElem.setAttribute("style", "width:100%");
+	parent.replaceChild(imgElem, umlElem);
+}
+
+
