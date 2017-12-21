@@ -53,7 +53,7 @@ function escapeHtml(text) {
 	var url = "https://www.plantuml.com/plantuml/img/" + compress(plantuml);
 	var imgElem = document.createElement("img");
 	imgElem.setAttribute("src", escapeHtml(url));
-	imgElem.setAttribute("title", plantuml);
+	imgElem.setAttribute("title", "");
 	parent.replaceChild(imgElem, umlElem);
 
 	imgElem.onclick = function() {
