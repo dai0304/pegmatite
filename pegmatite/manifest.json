@@ -1,13 +1,18 @@
 {
 	"manifest_version": 2,
 	"name": "Pegmatite",
-	"version": "1.0",
+	"version": "1.1.0",
 	"description": "Shows graphs and diagrams rendered by PlantUML.",
-	"content_scripts": [{
-		"js": [
-			"rawdeflate.js",
-			"content-script.js"
-		],
-		"matches": ["https://github.com/*"]
-	}]
+	"content_scripts": [
+		{
+			"js": [
+				"rawdeflate.js",
+				"content-script.js"
+			],
+			"matches": [
+				"https://github.com/*",
+				"https://gist.github.com/*"
+			]
+		}
+	]
 }
