@@ -6,11 +6,11 @@ Pegmatite is Google Chrome extension that replace PlantUML code blocks into prev
 
 ## Summary
 
-You will see below | But we see
--------------|-------------
-![Code block](images/before.png) | ![UML diagraml](images/after.png)
+| You will see below               | But we see
+| -------------------------------- | -------------
+| ![Code block](images/before.png) | ![UML diagraml](images/after.png)
 
-- This extension is enabled only in `https://github.com/*`
+- This extension is enabled only in `https://github.com/*` or `https://gist.github.com/*`
 - Replace only code block with lang `uml` and starts with `@start`
 - When the element clicked, element will toggle original code block and preview image.
 
