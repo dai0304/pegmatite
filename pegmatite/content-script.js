@@ -54,10 +54,10 @@ function replaceElement(umlElem, srcUrl) {
 	imgElem.setAttribute("title", "");
 	parent.replaceChild(imgElem, umlElem);
 
-	imgElem.onclick = function() {
+	imgElem.ondblclick = function() {
 		parent.replaceChild(umlElem, imgElem);
 	};
-	umlElem.onclick = function() {
+	umlElem.ondblclick = function() {
 		parent.replaceChild(imgElem, umlElem);
 	};
 }
