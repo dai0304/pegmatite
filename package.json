@@ -1,6 +1,6 @@
 {
 	"name": "pegmatite",
-	"version": "1.1.0",
+	"version": "1.2.0",
 	"description": "Pegmatite is Google Chrome extension that replace PlantUML code blocks into preview images.",
 	"private": true,
 	"scripts": {
