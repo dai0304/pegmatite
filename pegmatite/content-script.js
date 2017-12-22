@@ -1,3 +1,5 @@
+/* global chrome */
+
 function encode64(data) {
 	for (var r = "", i = 0, n = data.length; i < n; i += 3) {
 		r += append3bytes(
@@ -45,21 +47,34 @@ function escapeHtml(text) {
 		.replace(/'/g, "&#039;");
 }
 
-[].forEach.call(document.querySelectorAll("pre[lang='uml']"), function(umlElem) {
+function replaceElement(umlElem, srcUrl) {
 	var parent = umlElem.parentNode;
-	var plantuml = umlElem.querySelector("code").textContent.trim();
-	if (plantuml.substr(0, "@start".length) !== "@start") return;
-
-	var url = "https://www.plantuml.com/plantuml/img/" + compress(plantuml);
 	var imgElem = document.createElement("img");
-	imgElem.setAttribute("src", escapeHtml(url));
+	imgElem.setAttribute("src", escapeHtml(srcUrl));
 	imgElem.setAttribute("title", "");
 	parent.replaceChild(imgElem, umlElem);
 
-	imgElem.onclick = function() {
+	imgElem.ondblclick = function() {
 		parent.replaceChild(umlElem, imgElem);
 	};
-	umlElem.onclick = function() {
+	umlElem.ondblclick = function() {
 		parent.replaceChild(imgElem, umlElem);
 	};
+}
+
+chrome.storage.local.get("baseUrl", function(config) {
+	var baseUrl = config.baseUrl || "https://www.plantuml.com/plantuml/img/";
+	[].forEach.call(document.querySelectorAll("pre[lang='uml']"), function(umlElem) {
+		var plantuml = umlElem.querySelector("code").textContent.trim();
+		if (plantuml.substr(0, "@start".length) !== "@start") return;
+		var plantUmlServerUrl = baseUrl + compress(plantuml);
+		if (plantUmlServerUrl.lastIndexOf("https", 0) === 0) {
+			replaceElement(umlElem, plantUmlServerUrl);
+		} else {
+			// to avoid mixed-content
+			chrome.runtime.sendMessage({ "action": "plantuml", "url": plantUmlServerUrl }, function(dataUri) {
+				replaceElement(umlElem, dataUri);
+			});
+		}
+	});
 });
