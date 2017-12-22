@@ -3,6 +3,10 @@
 	"name": "Pegmatite",
 	"version": "1.1.0",
 	"description": "Shows graphs and diagrams rendered by PlantUML.",
+	"permissions": [
+		"storage"
+	],
+	"options_page": "options.html",
 	"content_scripts": [
 		{
 			"js": [
