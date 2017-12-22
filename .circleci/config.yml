@@ -1,0 +1,18 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:7-browsers
+    working_directory: ~/workspace
+    steps:
+      - checkout
+      - run:
+          name: lint
+          command: |
+            mkdir -p ./reports
+            npm install
+            npm run lint -- --format=junit --output-file ./reports/eslint.xml
+      - store_test_results:
+          path: ./reports
+      - store_artifacts:
+          path: ./reports
