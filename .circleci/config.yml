@@ -6,11 +6,20 @@ jobs:
     working_directory: ~/workspace
     steps:
       - checkout
+      - restore_cache:
+          keys: 
+            - dependency-cache-{{ .Branch }}-{{ .Revision }}
+            - dependency-cache-develop
+            - dependency-cache-master
+      - run: npm install
+      - save_cache:
+          key: dependency-cache-{{ .Branch }}-{{ .Revision }}
+          paths:
+            - ./node_modules
       - run:
           name: lint
           command: |
             mkdir -p ./reports
-            npm install
             npm run lint -- --format=junit --output-file ./reports/eslint.xml
       - store_test_results:
           path: ./reports
