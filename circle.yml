@@ -1,4 +1,0 @@
-test:
-  pre:
-    - mkdir -p $CIRCLE_TEST_REPORTS/reports
-    - npm run lint -- --format junit --output-file $CIRCLE_TEST_REPORTS/reports/eslint.xml
