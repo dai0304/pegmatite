@@ -62,23 +62,26 @@ function replaceElement(umlElem, srcUrl) {
 	};
 }
 
-chrome.storage.local.get("baseUrl", function(config) {
-	var selector;
-	var extractor;
-	if (window.location.hostname === "github.com" || window.location.hostname === "gist.github.com") {
-		selector = "pre[lang='uml']";
-		extractor = function (elem) {
+var siteProfiles = {
+	"default": {
+		"selector": "pre[lang='uml']",
+		"extract": function (elem) {
 			return elem.querySelector("code").textContent.trim();
 		}
-	} else { // gitpitch.com
-		selector = "pre code.lang-uml";
-		extractor = function (elem) {
+	},
+	"gitpitch.com": {
+		"selector": "pre code.lang-uml",
+		"extract": function (elem) {
 			return elem.innerText.trim();
 		}
 	}
+};
+
+chrome.storage.local.get("baseUrl", function(config) {
+	var siteProfile = siteProfiles[window.location.hostname] || siteProfiles["default"];
 	var baseUrl = config.baseUrl || "https://www.plantuml.com/plantuml/img/";
-	[].forEach.call(document.querySelectorAll(selector), function (umlElem) {
-		var plantuml = extractor(umlElem);
+	[].forEach.call(document.querySelectorAll(siteProfile.selector), function (umlElem) {
+		var plantuml = siteProfile.extract(umlElem);
 		if (plantuml.substr(0, "@start".length) !== "@start") return;
 		var plantUmlServerUrl = baseUrl + compress(plantuml);
 		if (plantUmlServerUrl.lastIndexOf("https", 0) === 0) { // if URL starts with "https"
