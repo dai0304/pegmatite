@@ -63,12 +63,25 @@ function replaceElement(umlElem, srcUrl) {
 }
 
 chrome.storage.local.get("baseUrl", function(config) {
+	var selector;
+	var extractor;
+	if (window.location.hostname === "github.com" || window.location.hostname === "gist.github.com") {
+		selector = "pre[lang='uml']";
+		extractor = function (elem) {
+			return elem.querySelector("code").textContent.trim();
+		}
+	} else { // gitpitch.com
+		selector = "pre code.lang-uml";
+		extractor = function (elem) {
+			return elem.innerText.trim();
+		}
+	}
 	var baseUrl = config.baseUrl || "https://www.plantuml.com/plantuml/img/";
-	[].forEach.call(document.querySelectorAll("pre[lang='uml']"), function(umlElem) {
-		var plantuml = umlElem.querySelector("code").textContent.trim();
+	[].forEach.call(document.querySelectorAll(selector), function (umlElem) {
+		var plantuml = extractor(umlElem);
 		if (plantuml.substr(0, "@start".length) !== "@start") return;
 		var plantUmlServerUrl = baseUrl + compress(plantuml);
-		if (plantUmlServerUrl.lastIndexOf("https", 0) === 0) {
+		if (plantUmlServerUrl.lastIndexOf("https", 0) === 0) { // if URL starts with "https"
 			replaceElement(umlElem, plantUmlServerUrl);
 		} else {
 			// to avoid mixed-content
