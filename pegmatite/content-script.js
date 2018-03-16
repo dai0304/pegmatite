@@ -64,7 +64,7 @@ function replaceElement(umlElem, srcUrl) {
 
 var siteProfiles = {
 	"default": {
-		"selector": "pre[lang='uml']",
+		"selector": "pre[lang='uml'], pre[lang='puml'], pre[lang='plantuml']",
 		"extract": function (elem) {
 			return elem.querySelector("code").textContent.trim();
 		}
