@@ -14,17 +14,17 @@
     $ git flow release finish x.y.z
     ```
 
-1. Create package
+4. Create package
 
     ```
     $ zip -r pegmatite.zip -j pegmatite/*
     ```
 
-2. Open developer dashboard
+5. Open developer dashboard
 
     ```
     $ open https://chrome.google.com/webstore/developer/edit/jegkfbnfbfnohncpcfcimepibmhlkldo
     ```
 
-3. Upload package
-4. Preview and publish
+6. Upload package
+7. Preview and publish
