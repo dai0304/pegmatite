@@ -10,16 +10,17 @@ Pegmatite is Google Chrome extension that replace PlantUML code blocks into prev
 | -------------------------------- | -------------
 | ![Code block](images/before.png) | ![UML diagraml](images/after.png)
 
-- This extension is enabled only in the whitelisted sites.
-    - `https://github.com/*`
-    - `https://gist.github.com/*`
-    - `https://gitpitch.com/*`
-- Replace only code block with lang `uml` and starts with `@start`
-- When the element is double-clicked, element will toggle original code block and preview image.
+* This extension is enabled only in the whitelisted sites.
+    * `https://github.com/*`
+    * `https://gist.github.com/*`
+    * `https://gitpitch.com/*`
+* Replace only code block with lang `uml` and starts with `@start`.
+    * lang `puml` or `plantuml` is also supported.
+* When the element is double-clicked, element will toggle original code block and preview image.
 
 ## Sample contents
 
-### Sequence diagram
+### Sequence diagram with lang `uml`
 
 ```uml
 @startuml
@@ -31,9 +32,9 @@ Alice <-- Bob: another authentication Response
 @enduml
 ```
 
-### Sequence diagram
+### State diagram with lang `puml`
 
-```uml
+```puml
 @startuml
 [*] --> State1
 State1 --> [*]
@@ -75,9 +76,9 @@ Configuring "Base URL" on the setting page, Pegmatite delegates image generation
 
 Examples.
 
-- `https://www.plantuml.com/plantuml/img/` (default)
-- `https://www.plantuml.com/plantuml/svg/`
-- `https://any-plantuml-server.example.com:8080/img/`
+* `https://www.plantuml.com/plantuml/img/` (default)
+* `https://www.plantuml.com/plantuml/svg/`
+* `https://any-plantuml-server.example.com:8080/img/`
 
 Also you can run PlantUML server in localhost using Docker as following command:
 
@@ -85,18 +86,18 @@ Also you can run PlantUML server in localhost using Docker as following command:
 $ docker run -d -p 8080:8080 plantuml/plantuml-server
 ```
 
-And you can specify `http://localhost:8080/img/` as "Base URL".
+And you can specify `http://localhost:8080/img/` as *Base URL*.
 
-Note: To avoid mixed-content, if the "Base URL" is not HTTPS scheme,
+Note: To avoid mixed-content, if the *Base URL* is not HTTPS scheme,
 generated image is converted to [DATA URI](https://tools.ietf.org/html/rfc2397).
 
 ## Contribution
 
 1. Fork ([https://github.com/dai0304/pegmatite/fork](https://github.com/dai0304/pegmatite/fork))
-1. Create a feature branch named like `feature/something_awesome_feature` from `development` branch
-1. Commit your changes
-1. Rebase your local changes against the `develop` branch
-1. Create new Pull Request
+2. Create a feature branch named like `feature/something_awesome_feature` from `development` branch
+3. Commit your changes
+4. Rebase your local changes against the `develop` branch
+5. Create new Pull Request
 
 ## Author
 
