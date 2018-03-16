@@ -1,0 +1,12 @@
+{
+    "default": true,
+    "MD007": { "indent": 4 },
+    "MD009": { "br_spaces": 1 },
+    "MD010": false,
+    "MD012": { "maximum": 2 },
+    "MD013": { "line_length": 120 },
+    "MD014": false,
+    "MD026": { "punctuation": ".,;!?" },
+    "MD029": { "style": "ordered" },
+    "MD040": false
+}
