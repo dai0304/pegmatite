@@ -8,6 +8,10 @@
 		"<all_urls>"
 	],
 	"options_page": "options.html",
+	"options_ui": {
+		"page": "options.html",
+		"chrome_style": true
+	},
 	"background": {
 		"scripts": [
 			"background.js"
