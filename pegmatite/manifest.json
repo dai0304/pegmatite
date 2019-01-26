@@ -1,34 +1,27 @@
 {
-	"manifest_version": 2,
-	"name": "Pegmatite",
-	"version": "1.4.0",
-	"description": "Shows graphs and diagrams rendered by PlantUML.",
-	"permissions": [
-		"storage",
-		"<all_urls>"
-	],
-	"options_page": "options.html",
-	"options_ui": {
-		"page": "options.html",
-		"chrome_style": true
-	},
-	"background": {
-		"scripts": [
-			"background.js"
-		]
-	},
-	"content_scripts": [
-		{
-			"js": [
-				"rawdeflate.js",
-				"content-script.js"
-			],
-			"matches": [
-				"https://github.com/*",
-				"https://gist.github.com/*",
-				"https://gitpitch.com/*",
-				"https://gitlab.com/*"
-			]
-		}
-	]
+  "manifest_version": 2,
+  "name": "Pegmatite",
+  "version": "1.4.0",
+  "description": "Shows graphs and diagrams rendered by PlantUML.",
+  "permissions": ["storage", "<all_urls>"],
+  "options_page": "options.html",
+  "options_ui": {
+    "page": "options.html",
+    "chrome_style": true
+  },
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "content_scripts": [
+    {
+      "js": ["rawdeflate.js", "content-script.js"],
+      "matches": [
+        "https://github.com/*",
+        "https://gist.github.com/*",
+        "https://gitpitch.com/*",
+        "https://gitlab.com/*",
+        "https://bitbucket.org/*"
+      ]
+    }
+  ]
 }

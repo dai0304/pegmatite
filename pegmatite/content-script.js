@@ -108,6 +108,12 @@ var siteProfiles = {
 			}			
 			return compress(plantuml);
 		}
+	},
+	"bitbucket.org": {
+		"selector": "div.codehilite.language-plantuml > pre",
+		"extract": function (elem) {
+			return elem.innerText.trim();
+		}
 	}
 };
 
@@ -139,7 +145,7 @@ function onLoadAction(siteProfile, baseUrl){
 	});
 }
 
-chrome.storage.local.get("baseUrl", function(config) {
+function run(config) {
 	var siteProfile = siteProfiles[window.location.hostname] || siteProfiles["default"];
 	var baseUrl = config.baseUrl || "https://www.plantuml.com/plantuml/img/";
 	if (document.querySelector("i[aria-label='Loading content…']")!=null){ // for wait loading @ gitlab.com
@@ -159,4 +165,24 @@ chrome.storage.local.get("baseUrl", function(config) {
 			});
 		}
 	});
+}
+
+chrome.storage.local.get("baseUrl", function(config) {
+	if (window.location.hostname === "bitbucket.org") {
+		var observer = new MutationObserver(function() {
+			if (document.getElementsByClassName("language-plantuml").length > 0) {
+				run(config);
+				observer.disconnect();
+			}
+		});
+
+		observer.observe(document.body, {
+			attributes: true,
+			characterData: true,
+			childList: true,
+			subtree: true
+		});
+	}
+
+	run(config);
 });
