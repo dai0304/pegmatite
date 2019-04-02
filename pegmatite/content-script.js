@@ -67,29 +67,95 @@ var siteProfiles = {
 		"selector": "pre[lang='uml'], pre[lang='puml'], pre[lang='plantuml']",
 		"extract": function (elem) {
 			return elem.querySelector("code").textContent.trim();
+		},
+		"replace": function (elem) {
+			return elem;
+		},
+		"compress": function (elem) {
+			return compress(elem.querySelector("code").textContent.trim());
 		}
 	},
 	"gitpitch.com": {
 		"selector": "pre code.lang-uml",
 		"extract": function (elem) {
 			return elem.innerText.trim();
+		},
+		"replace": function (elem) {
+			return elem;
+		},
+		"compress": function (elem) {
+			return compress(elem.innerText.trim());
+		}
+	},
+	"gitlab.com": {
+		"selector": "pre code span.line, div div pre", // markdown, asciidoc
+		"extract": function (elem) {
+			return elem.textContent.trim();
+		},
+		"replace": function (elem) {
+			var child = elem.querySelector("code");
+			if ( child !=null) return child; // markdown
+			return elem; // asciidoc
+		},
+		"compress": function (elem) {
+			var plantuml = "";
+			if (elem.tagName == "SPAN"){ // markdown
+				elem.parentNode.querySelectorAll("span.line").forEach(function(span){
+					plantuml = plantuml + span.textContent.trim() + "\n";
+				});				
+			} else { // asciidoc
+				plantuml = elem.textContent.trim();
+			}			
+			return compress(plantuml);
 		}
 	}
 };
 
-chrome.storage.local.get("baseUrl", function(config) {
-	var siteProfile = siteProfiles[window.location.hostname] || siteProfiles["default"];
-	var baseUrl = config.baseUrl || "https://www.plantuml.com/plantuml/img/";
+
+function loop(counter, retry, siteProfile, baseUrl){
+	counter++;
+	if (document.querySelector("i[aria-label='Loading content…']")==null) counter+=retry;
+	var id = setTimeout(loop,100,counter,retry, siteProfile, baseUrl);
+	if(counter>=retry){
+		clearTimeout(id);
+		onLoadAction(siteProfile, baseUrl);
+	}
+}
+
+function onLoadAction(siteProfile, baseUrl){
 	[].forEach.call(document.querySelectorAll(siteProfile.selector), function (umlElem) {
 		var plantuml = siteProfile.extract(umlElem);
 		if (plantuml.substr(0, "@start".length) !== "@start") return;
-		var plantUmlServerUrl = baseUrl + compress(plantuml);
+		var plantUmlServerUrl = baseUrl + siteProfile.compress(umlElem);
+		var replaceElem = siteProfile.replace(umlElem);
 		if (plantUmlServerUrl.lastIndexOf("https", 0) === 0) { // if URL starts with "https"
-			replaceElement(umlElem, plantUmlServerUrl);
+			replaceElement(replaceElem, plantUmlServerUrl);
 		} else {
 			// to avoid mixed-content
 			chrome.runtime.sendMessage({ "action": "plantuml", "url": plantUmlServerUrl }, function(dataUri) {
-				replaceElement(umlElem, dataUri);
+				replaceElement(replaceElem, dataUri);
+			});
+		}
+	});
+}
+
+chrome.storage.local.get("baseUrl", function(config) {
+	var siteProfile = siteProfiles[window.location.hostname] || siteProfiles["default"];
+	var baseUrl = config.baseUrl || "https://www.plantuml.com/plantuml/img/";
+	if (document.querySelector("i[aria-label='Loading content…']")!=null){ // for wait loading @ gitlab.com
+		loop(1, 10, siteProfile, baseUrl);
+	}
+	[].forEach.call(document.querySelectorAll(siteProfile.selector), function (umlElem) {
+		var plantuml = siteProfile.extract(umlElem);
+		if (plantuml.substr(0, "@start".length) !== "@start") return;
+		var plantUmlServerUrl = baseUrl + siteProfile.compress(umlElem);
+		var replaceElem = siteProfile.replace(umlElem);
+		if (plantUmlServerUrl.lastIndexOf("https", 0) === 0) { // if URL starts with "https"
+			replaceElement(replaceElem, plantUmlServerUrl);
+		} else {
+			// to avoid mixed-content
+			chrome.runtime.sendMessage({ "action": "plantuml", "url": plantUmlServerUrl }, function(dataUri) {
+				replaceElement(replaceElem, dataUri);
 			});
 		}
 	});
