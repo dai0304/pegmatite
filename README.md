@@ -14,7 +14,9 @@ Pegmatite is Google Chrome extension that replace PlantUML code blocks into prev
     * `https://github.com/*`
     * `https://gist.github.com/*`
     * `https://gitpitch.com/*`
+    * `https://gitlab.com/*`
     * `https://bitbucket.org/*`
+    * `https://*.backlog.jp/wiki/*`
 * Replace only code block with lang `uml` and starts with `@start`.
     * lang `puml` or `plantuml` is also supported.
 * When the element is double-clicked, element will toggle original code block and preview image.
