@@ -20,7 +20,8 @@
         "https://gist.github.com/*",
         "https://gitpitch.com/*",
         "https://gitlab.com/*",
-        "https://bitbucket.org/*"
+        "https://bitbucket.org/*",
+        "https://*.backlog.jp/wiki/*"
       ]
     }
   ]
