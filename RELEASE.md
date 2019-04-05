@@ -12,6 +12,7 @@
     ```
     $ git commit -m"bump version"
     $ git flow release finish x.y.z
+    $ git push origin master develop --tags
     ```
 
 4. Create package
