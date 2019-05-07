@@ -113,6 +113,12 @@ var siteProfiles = {
 		"selector": "div.codehilite.language-plantuml > pre",
 		"extract": function (elem) {
 			return elem.innerText.trim();
+		},
+		replace: function(elem) {
+			return elem;
+		},
+		compress: function(elem) {
+			return compress(elem.innerText.trim());
 		}
 	},
 	"backlog.jp": {
