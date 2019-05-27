@@ -19,6 +19,6 @@
 	},
 	"homepage": "https://github.com/dai0304/pegmatite#readme",
 	"devDependencies": {
-		"eslint": "^3.19.0"
+		"eslint": "^5.16.0"
 	}
 }
