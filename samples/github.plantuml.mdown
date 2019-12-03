@@ -1,7 +1,7 @@
 
-[Open-source tool that uses simple textual descriptions to draw beautiful UML diagrams.](http://plantuml.com/en/)
+# [Open-source tool that uses simple textual descriptions to draw beautiful UML diagrams.](http://plantuml.com/en/)
 
-# PlantUML
+## PlantUML
 
 - Sequence diagram(uml)
 
@@ -161,7 +161,7 @@ WB is Waiting
 @enduml
 ```
 
-# non-UML diagrams
+## non-UML diagrams
 
 - Wireframe graphical interface
 
@@ -278,17 +278,20 @@ Try also
 end note
 @enduml
 ```
+
 ```plantuml
 @startuml
 Bob -> Alice : Can you solve: <math>ax^2+bx+c=0</math>
 Alice --> Bob: <math>x = (-b+-sqrt(b^2-4ac))/(2a)</math>
 @enduml
 ```
+
 ```plantuml
 @startmath
 f(t)=(a_0)/2 + sum_(n=1)^ooa_ncos((npit)/L)+sum_(n=1)^oo b_n\ sin((npit)/L)
 @endmath
 ```
+
 ```plantuml
 @startlatex
 \sum_{i=0}^{n-1} (a_i + b_i^2)
