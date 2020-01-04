@@ -35,7 +35,7 @@ function encode6bit(b) {
 
 function compress(s) {
 	s = unescape(encodeURIComponent(s));
-	return encode64(deflate(s));
+	return encode64(window.RawDeflate.deflate(s));
 }
 
 function escapeHtml(text) {
@@ -47,19 +47,54 @@ function escapeHtml(text) {
 		.replace(/'/g, "&#039;");
 }
 
+function getBackgroundColor(element, pseudoElt) {
+	if (element !== null) {
+		if (pseudoElt === undefined) pseudoElt = null;
+		return window
+			.getComputedStyle(element, pseudoElt)
+			.getPropertyValue("background-color");
+	}
+	return "";
+}
+
+function CodePre(nodeList) {
+	this.exist = false;
+	this.list = nodeList;
+	this.parentColor = "";
+	this.selfColor = "";
+	if (this.list.length > 0) {
+		this.selfColor = getBackgroundColor(this.list.item(0));
+		this.parentColor = getBackgroundColor(this.list.item(0).parentElement);
+		this.exist = true;
+	}
+}
+
+var codePre = new CodePre(document.querySelectorAll(".markdown-body pre")); // github style
+
+function changeBackgroundColor(element, color, exist) {
+	if (exist) {
+		element.style.backgroundColor = color;
+	}
+}
+
 function replaceElement(umlElem, srcUrl) {
 	var parent = umlElem.parentNode;
-	var imgElem = document.createElement("img");
-	imgElem.setAttribute("src", escapeHtml(srcUrl));
-	imgElem.setAttribute("title", "");
-	parent.replaceChild(imgElem, umlElem);
-
-	imgElem.ondblclick = function() {
-		parent.replaceChild(umlElem, imgElem);
-	};
-	umlElem.ondblclick = function() {
+	if (parent !== null) { // for asciidoc (div div pre)
+		var imgElem = document.createElement("img");
+		imgElem.setAttribute("src", escapeHtml(srcUrl));
+		imgElem.setAttribute("title", "");
 		parent.replaceChild(imgElem, umlElem);
-	};
+		changeBackgroundColor(parent, codePre.parentColor, codePre.exist);
+
+		imgElem.ondblclick = function() {
+			parent.replaceChild(umlElem, imgElem);
+			changeBackgroundColor(parent, codePre.selfColor, codePre.exist);
+		};
+		umlElem.ondblclick = function() {
+			parent.replaceChild(imgElem, umlElem);
+			changeBackgroundColor(parent, codePre.parentColor, codePre.exist);
+		};
+	}
 }
 
 var siteProfiles = {
@@ -102,10 +137,10 @@ var siteProfiles = {
 			if (elem.tagName == "SPAN"){ // markdown
 				elem.parentNode.querySelectorAll("span.line").forEach(function(span){
 					plantuml = plantuml + span.textContent.trim() + "\n";
-				});				
+				});
 			} else { // asciidoc
 				plantuml = elem.textContent.trim();
-			}			
+			}
 			return compress(plantuml);
 		}
 	},
@@ -125,6 +160,29 @@ var siteProfiles = {
 		"selector": "pre.lang-uml, pre.lang-puml, pre.lang-plantuml",
 		"extract": function (elem) {
 			return elem.innerText.trim();
+		}
+	},
+	"github.com": { // markdown + asciidoc
+		"selector": "pre[lang='uml'], pre[lang='puml'], pre[lang='plantuml'], div div pre", // markdown, asciidoc
+		"extract": function (elem) {
+			var child = elem.querySelector("code");
+			if (child != null) return child.textContent.trim(); // markdown
+			return elem.textContent.trim(); // asciidoc
+		},
+		"replace": function (elem) {
+			var child = elem.querySelector("code");
+			if (child != null) return child; // markdown
+			return elem; // asciidoc
+		},
+		"compress": function (elem) {
+			var plantuml = "";
+			var child = elem.querySelector("code");
+			if (child != null) { // markdown
+				plantuml = elem.querySelector("code").textContent.trim();
+			} else { // asciidoc
+				plantuml = elem.textContent.trim();
+			}
+			return compress(plantuml);
 		}
 	}
 };

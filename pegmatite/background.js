@@ -40,3 +40,25 @@ function onMessage(message, sender, callback) {
 }
 
 chrome.runtime.onMessage.addListener(onMessage);
+
+var matches = new RegExp(
+	"^" + chrome.runtime.getManifest()
+		.content_scripts[0]["matches"]
+		.join("|^")
+		.replace(/\//g, "\\/")
+		.replace(/\./g, "\\.")
+		.replace(/\*/g, ".+"));
+
+chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+	if (changeInfo.status === "complete") {
+		if (tab.url.match(matches)) {
+			chrome.tabs.executeScript(tab.id, {
+				file: "rawdeflate.js"
+			}, function() {
+				chrome.tabs.executeScript(tab.id, {
+					file: "content-script.js"
+				}, chrome.runtime.lastError);
+			});
+		}
+	}
+});

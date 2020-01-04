@@ -71,7 +71,7 @@ baz
 
 ## Using another PlantUML server
 
-By default, Pegmatite uses [PlantUML server](https://github.com/plantuml/plantuml-server) 
+By default, Pegmatite uses [PlantUML server](https://github.com/plantuml/plantuml-server)
 deployed to `https://www.plantuml.com/plantuml`.
 
 However, if your UML is confidential and you cannot send it to an external server, you can also use any PlantUML server.
@@ -97,7 +97,7 @@ generated image is converted to [DATA URI](https://tools.ietf.org/html/rfc2397).
 ## Contribution
 
 1. Fork ([https://github.com/dai0304/pegmatite/fork](https://github.com/dai0304/pegmatite/fork))
-2. Create a feature branch named like `feature/something_awesome_feature` from `development` branch
+2. Create a feature branch named like `feature/something_awesome_feature` from `develop` branch
 3. Commit your changes
 4. Rebase your local changes against the `develop` branch
 5. Create new Pull Request

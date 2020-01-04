@@ -6,11 +6,11 @@
     $ git flow release start x.y.z
     ```
 
-2. Bump version in `pegmatite/manifest.json`
+2. Bump version in `pegmatite/manifest.json` and `package.json`
 3. Commit and finish release
 
     ```
-    $ git commit -m"bump version"
+    $ git commit -m "bump version"
     $ git flow release finish x.y.z
     $ git push origin master develop --tags
     ```

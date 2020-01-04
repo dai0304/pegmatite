@@ -1,16 +1,17 @@
 {
   "manifest_version": 2,
   "name": "Pegmatite",
-  "version": "1.5.1",
+  "version": "1.6.0",
   "description": "Shows graphs and diagrams rendered by PlantUML.",
-  "permissions": ["storage", "<all_urls>"],
+  "permissions": ["storage", "https://*/*", "tabs"],
   "options_page": "options.html",
   "options_ui": {
     "page": "options.html",
     "chrome_style": true
   },
   "background": {
-    "scripts": ["background.js"]
+    "scripts": ["background.js"],
+    "persistent": false
   },
   "content_scripts": [
     {
