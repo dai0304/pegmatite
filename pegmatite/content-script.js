@@ -35,7 +35,7 @@ function encode6bit(b) {
 
 function compress(s) {
 	s = unescape(encodeURIComponent(s));
-	return encode64(deflate(s));
+	return encode64(window.RawDeflate.deflate(s));
 }
 
 function escapeHtml(text) {
