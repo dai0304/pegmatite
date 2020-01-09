@@ -51,14 +51,16 @@ var matches = new RegExp(
 
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
 	if (changeInfo.status === "complete") {
-		if (tab.url.match(matches)) {
-			chrome.tabs.executeScript(tab.id, {
-				file: "rawdeflate.js"
-			}, function() {
+		if (tab.url) {
+			if (tab.url.match(matches)) {
 				chrome.tabs.executeScript(tab.id, {
-					file: "content-script.js"
-				}, chrome.runtime.lastError);
-			});
+					file: "rawdeflate.js"
+				}, function() {
+					chrome.tabs.executeScript(tab.id, {
+						file: "content-script.js"
+					}, chrome.runtime.lastError);
+				});
+			}
 		}
 	}
 });

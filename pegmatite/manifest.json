@@ -3,7 +3,7 @@
   "name": "Pegmatite",
   "version": "1.6.0",
   "description": "Shows graphs and diagrams rendered by PlantUML.",
-  "permissions": ["storage", "https://*/*", "tabs"],
+  "permissions": ["storage", "https://*/*", "activeTab"],
   "options_page": "options.html",
   "options_ui": {
     "page": "options.html",
