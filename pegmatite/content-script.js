@@ -162,6 +162,19 @@ var siteProfiles = {
 			return elem.innerText.trim();
 		}
 	},
+	"atlassian.net": {  // {code}, {noformat}
+		"selector": "pre.code-java, pre",
+		"extract": function (elem) {
+			return elem.innerText.trim();
+		},
+		"compress": function (elem) {
+			return compress(elem.innerText.trim());
+		},
+		replace: function(elem) {
+			// div.code>div.codeContent>pre , div.preformatted>div.preformattedContent>pre
+			return elem.parentElement.parentElement;
+		},
+	},
 	"github.com": { // markdown + asciidoc
 		"selector": "pre[lang='uml'], pre[lang='puml'], pre[lang='plantuml'], div div pre", // markdown, asciidoc
 		"extract": function (elem) {
