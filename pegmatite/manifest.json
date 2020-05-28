@@ -3,26 +3,33 @@
   "name": "Pegmatite",
   "version": "1.6.0",
   "description": "Shows graphs and diagrams rendered by PlantUML.",
-  "permissions": ["storage", "https://*/*", "tabs"],
+  "permissions": [
+    "storage", 
+    "tabs",
+    "contextMenus"
+  ],
+  "optional_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
   "options_page": "options.html",
   "options_ui": {
     "page": "options.html",
     "chrome_style": true
   },
   "background": {
-    "scripts": ["background.js"],
+    "scripts": [
+      "webext-domain-permission-toggle.js",
+      "webext-dynamic-content-scripts.js",
+      "background.js"
+    ],
     "persistent": false
   },
   "content_scripts": [
     {
       "js": ["rawdeflate.js", "content-script.js"],
       "matches": [
-        "https://github.com/*",
-        "https://gist.github.com/*",
-        "https://gitpitch.com/*",
-        "https://gitlab.com/*",
-        "https://bitbucket.org/*",
-        "https://*.backlog.jp/wiki/*"
+        "https://github.com/*"
       ]
     }
   ]

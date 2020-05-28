@@ -190,9 +190,9 @@ var siteProfiles = {
 
 function loop(counter, retry, siteProfile, baseUrl){
 	counter++;
-	if (document.querySelector("i[aria-label='Loading content…']")==null) counter+=retry;
-	var id = setTimeout(loop,100,counter,retry, siteProfile, baseUrl);
-	if(counter>=retry){
+	if (document.querySelector("i[aria-label='Loading content…']") == null) counter += retry;
+	var id = setTimeout(loop, 100, counter, retry, siteProfile, baseUrl);
+	if(counter >= retry){
 		clearTimeout(id);
 		onLoadAction(siteProfile, baseUrl);
 	}
@@ -219,7 +219,7 @@ function run(config) {
 	var hostname = window.location.hostname.split(".").slice(-2).join(".");
 	var siteProfile = siteProfiles[hostname] || siteProfiles["default"];
 	var baseUrl = config.baseUrl || "https://www.plantuml.com/plantuml/img/";
-	if (document.querySelector("i[aria-label='Loading content…']")!=null){ // for wait loading @ gitlab.com
+	if (document.querySelector("i[aria-label='Loading content…']") != null) { // for wait loading @ gitlab.com
 		loop(1, 10, siteProfile, baseUrl);
 	}
 	[].forEach.call(document.querySelectorAll(siteProfile.selector), function (umlElem) {
