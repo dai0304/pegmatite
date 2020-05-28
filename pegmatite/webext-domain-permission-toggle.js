@@ -1,4 +1,5 @@
 /* https://github.com/fregante/webext-domain-permission-toggle @ v1.0.1 */
+/* eslint-disable */
 
 var addDomainPermissionToggle = (function () {
     'use strict';

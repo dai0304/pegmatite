@@ -63,4 +63,4 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
 	}
 });
 
-addDomainPermissionToggle();
+addDomainPermissionToggle(); // eslint-disable-line no-undef

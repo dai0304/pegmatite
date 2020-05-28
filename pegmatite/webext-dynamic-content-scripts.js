@@ -1,4 +1,5 @@
 /* https://github.com/fregante/webext-dynamic-content-scripts @ v6.0.4 */
+/* eslint-disable */
 
 (function () {
 	'use strict';
